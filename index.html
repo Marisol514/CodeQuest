@@ -2,15 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <title>JavaScript Quiz</title>
+  <title>Third Party API and JavaScript</title>
+  <style>
+    button {
+        border-radius: 8px; /* Adjust the border-radius as needed */
+        margin: 5px; /* Add margin for better spacing (optional) */
+        padding: 10px; /* Add padding for better spacing (optional) */
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
   <div class="container">
     <div id="start-screen">
-      <h1>JavaScript Quiz</h1>
-      <button id="start-btn">Start Quiz</button>
+      <h1>Third Party API and JavaScript Quiz</h1>
+      <button id="start-btn">Start Quest</button>
     </div>
     <div id="quiz-screen" style="display: none;">
       <h2 id="question">Question goes here</h2>
@@ -19,6 +28,7 @@
       <p id="timer">Time: <span id="time">60</span> seconds</p>
       <button id="submit-btn" style="display: none;">Submit Answer</button>
     </div>
+    <div id="feedback"></div>
     <div id="end-screen" style="display: none;">
       <h2>Quiz Over!</h2>
       <p>Your score: <span id="final-score"></span></p>
