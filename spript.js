@@ -1,24 +1,43 @@
+//the following event is triggered when the page is fully loaded.
 document.addEventListener('DOMContentLoaded', function () {
+    //Selecting various HTML elements by their ID's 
+    //shows up as the main item in the screen ready to start the quiz
     var startBtn = document.getElementById('start-btn');
+    //this adds the quiz sreen once the start button is elected
     var quizScreen = document.getElementById('quiz-screen');
+    //this is shwon once the quiz has ended
     var endScreen = document.getElementById('end-screen');
+    //this shows the count down time when the quiz has started
     var timerDisplay = document.getElementById('time');
+    //this displays the submit answer button on ineractive conding challenges
     var submitBtn = document.getElementById('submit-btn');
+    //the save button shows at the end when sacing your score and initials
     var saveBtn = document.getElementById('save-btn');
+    //creates the space to do the code imput on the quiz
     var codeInput = document.getElementById('code-input');
 
+    //Variables for the quiz and scoring
+    //timer variable
     var timer;
-    var timeLeft = 90; // Initial time in seconds
+    //Initial time in seconds
+    var timeLeft = 90;
+    //Index for current questions
     var currentQuestionIndex = 0;
+    //score variable starting at zero
     var score = 0;
 
+    //Array containing quiz questions, poppulated with question objects.
     var questions = [
         {
+            //this is indicatin the type of question. 
             type: 'multiple-choice',
+            //the question to display to the user
             question: 'What does the Window Object represent in JavaScript?',
+            //array of options for the user to choose from
             options: ['The browser window', 'The current HTML document', 'The global environment'],
+            //The correct answer to the question
             correctAnswer: 'The global environment'
-        },    
+        },
         {
             type: 'multiple-choice',
             question: 'What does the DOM Stand for in JavaScript?',
@@ -40,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             type: 'coding',
             question: 'Write code to create a new div element and append it to the body:',
-            codeChallenge: 'const newDiv = document.createElement(\'div\');\n// Your code here\n',
+            codeChallenge: 'var newDiv = document.createElement(\'div\');\n// Your code here\n',
             correctCode: 'document.body.appendChild(newDiv);'
         },
         {
@@ -77,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to select and log the text content of all paragraphs on the page:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const paragraphs = document.querySelectorAll(\'p\');\nparagraphs.forEach(paragraph => console.log(paragraph.textContent));'
+            correctCode: 'var paragraphs = document.querySelectorAll(\'p\');\nparagraphs.forEach(paragraph => console.log(paragraph.textContent));'
         },
         {
             type: 'multiple-choice',
@@ -89,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write a function that adds a CSS class "highlight" to all even-numbered list items (li elements):',
             codeChallenge: 'function highlightEvenItems() {\n// Your code here\n}',
-            correctCode: 'function highlightEvenItems() {\n  const listItems = document.querySelectorAll(\'li:nth-child(even)\');\n  listItems.forEach(item => item.classList.add(\'highlight\'));\n}'
+            correctCode: 'function highlightEvenItems() {\n  var listItems = document.querySelectorAll(\'li:nth-child(even)\');\n  listItems.forEach(item => item.classList.add(\'highlight\'));\n}'
         },
         {
             type: 'multiple-choice',
@@ -113,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write a function to find and return the total number of paragraphs in the document:',
             codeChallenge: 'function countParagraphs() {\n// Your code here\n}',
-            correctCode: 'function countParagraphs() {\n  const paragraphs = document.querySelectorAll(\'p\');\n  return paragraphs.length;\n}'
+            correctCode: 'function countParagraphs() {\n  var paragraphs = document.querySelectorAll(\'p\');\n  return paragraphs.length;\n}'
         },
         {
             type: 'multiple-choice',
@@ -125,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to set the "src" attribute of an image element with the ID "myImage" to "image.jpg":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const imageElement = document.getElementById(\'myImage\');\nimageElement.setAttribute(\'src\', \'image.jpg\');'
+            correctCode: 'var imageElement = document.getElementById(\'myImage\');\nimageElement.setAttribute(\'src\', \'image.jpg\');'
         },
         {
             type: 'multiple-choice',
@@ -137,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write a function that sets the "disabled" attribute of a button with the ID "myButton":',
             codeChallenge: 'function disableButton() {\n// Your code here\n}',
-            correctCode: 'function disableButton() {\n  const buttonElement = document.getElementById(\'myButton\');\n  buttonElement.setAttribute(\'disabled\', \'true\');\n}'
+            correctCode: 'function disableButton() {\n  var buttonElement = document.getElementById(\'myButton\');\n  buttonElement.setAttribute(\'disabled\', \'true\');\n}'
         },
         {
             type: 'multiple-choice',
@@ -149,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to remove the "href" attribute from a link with the class "external":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const linkElement = document.querySelector(\'.external\');\nlinkElement.removeAttribute(\'href\');'
+            correctCode: 'var linkElement = document.querySelector(\'.external\');\nlinkElement.removeAttribute(\'href\');'
         },
         {
             type: 'multiple-choice',
@@ -161,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write a function that sets the value of an input element with the ID "username" to "JohnDoe":',
             codeChallenge: 'function setUsername() {\n// Your code here\n}',
-            correctCode: 'function setUsername() {\n  const usernameInput = document.getElementById(\'username\');\n  usernameInput.value = \'JohnDoe\';\n}'
+            correctCode: 'function setUsername() {\n  var usernameInput = document.getElementById(\'username\');\n  usernameInput.value = \'JohnDoe\';\n}'
         },
         {
             type: 'multiple-choice',
@@ -173,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to create a new paragraph element and append it to a div with the ID "content":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const newParagraph = document.createElement(\'p\');\ndocument.getElementById(\'content\').appendChild(newParagraph);'
+            correctCode: 'var newParagraph = document.createElement(\'p\');\ndocument.getElementById(\'content\').appendChild(newParagraph);'
         },
         {
             type: 'multiple-choice',
@@ -185,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write a function that creates a new list item element and appends it to an unordered list with the ID "myList":',
             codeChallenge: 'function appendListItem() {\n// Your code here\n}',
-            correctCode: 'function appendListItem() {\n  const newListitem = document.createElement(\'li\');\n  document.getElementById(\'myList\').appendChild(newListitem);\n}'
+            correctCode: 'function appendListItem() {\n  var newListitem = document.createElement(\'li\');\n  document.getElementById(\'myList\').appendChild(newListitem);\n}'
         },
         {
             type: 'multiple-choice',
@@ -197,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to create a copy of an existing div element with the ID "originalDiv" and append it to the body:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const originalDiv = document.getElementById(\'originalDiv\');\nconst clonedDiv = originalDiv.cloneNode(true);\ndocument.body.appendChild(clonedDiv);'
+            correctCode: 'var originalDiv = document.getElementById(\'originalDiv\');\nvar clonedDiv = originalDiv.cloneNode(true);\ndocument.body.appendChild(clonedDiv);'
         },
         {
             type: 'multiple-choice',
@@ -209,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write a function that creates a new header element (h2) with the text "Hello" and appends it to the body:',
             codeChallenge: 'function appendHeader() {\n// Your code here\n}',
-            correctCode: 'function appendHeader() {\n  const newHeader = document.createElement(\'h2\');\n  newHeader.textContent = \'Hello\';\n  document.body.appendChild(newHeader);\n}'
+            correctCode: 'function appendHeader() {\n  var newHeader = document.createElement(\'h2\');\n  newHeader.textContent = \'Hello\';\n  document.body.appendChild(newHeader);\n}'
         },
         {
             type: 'multiple-choice',
@@ -233,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to clear the interval set in the previous example:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const intervalId = setInterval(() => { console.log("Hello, World!"); }, 2000);\nclearInterval(intervalId);'
+            correctCode: 'var intervalId = setInterval(() => { console.log("Hello, World!"); }, 2000);\nclearInterval(intervalId);'
         },
         {
             type: 'multiple-choice',
@@ -269,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to add a click event listener to a button element with the id "myButton" that alerts "Button clicked!":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const myButton = document.getElementById("myButton");\nmyButton.addEventListener("click", () => { alert("Button clicked!"); });'
+            correctCode: 'var myButton = document.getElementById("myButton");\nmyButton.addEventListener("click", () => { alert("Button clicked!"); });'
         },
         {
             type: 'multiple-choice',
@@ -281,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to prevent the default behavior of a form submission when the submit button is clicked:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const form = document.getElementById("myForm");\nform.addEventListener("submit", (event) => { event.preventDefault(); });'
+            correctCode: 'var form = document.getElementById("myForm");\nform.addEventListener("submit", (event) => { event.preventDefault(); });'
         },
         {
             type: 'multiple-choice',
@@ -305,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to dynamically add a click event listener to all list items inside an unordered list with the id "myList":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const listItems = document.getElementById("myList").querySelectorAll("li");\nlistItems.forEach(item => { item.addEventListener("click", () => { alert("List item clicked!"); }); });'
+            correctCode: 'var listItems = document.getElementById("myList").querySelectorAll("li");\nlistItems.forEach(item => { item.addEventListener("click", () => { alert("List item clicked!"); }); });'
         },
         {
             type: 'multiple-choice',
@@ -317,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to prevent the default behavior of a right-click on an image element with the id "myImage":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const myImage = document.getElementById("myImage");\nmyImage.addEventListener("contextmenu", (event) => { event.preventDefault(); });'
+            correctCode: 'var myImage = document.getElementById("myImage");\nmyImage.addEventListener("contextmenu", (event) => { event.preventDefault(); });'
         },
         {
             type: 'multiple-choice',
@@ -329,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to prevent the default form submission behavior when the submit button is clicked:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const form = document.getElementById("myForm");\nform.addEventListener("submit", (event) => { event.preventDefault(); });'
+            correctCode: 'var form = document.getElementById("myForm");\nform.addEventListener("submit", (event) => { event.preventDefault(); });'
         },
         {
             type: 'multiple-choice',
@@ -341,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to prevent the default behavior of a link with the class "external" when it is clicked:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const externalLink = document.querySelector(".external");\nexternalLink.addEventListener("click", (event) => { event.preventDefault(); });'
+            correctCode: 'var externalLink = document.querySelector(".external");\nexternalLink.addEventListener("click", (event) => { event.preventDefault(); });'
         },
         {
             type: 'multiple-choice',
@@ -389,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to prevent the default behavior when the "Enter" key is pressed inside a form element:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const form = document.getElementById("myForm");\nform.addEventListener("keydown", (event) => { if (event.key === "Enter") event.preventDefault(); });'
+            correctCode: 'var form = document.getElementById("myForm");\nform.addEventListener("keydown", (event) => { if (event.key === "Enter") event.preventDefault(); });'
         },
         {
             type: 'multiple-choice',
@@ -454,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to attach a click event listener to a div element and log "Bubbling" during the bubbling phase:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const myDiv = document.getElementById("myDiv");\nmyDiv.addEventListener("click", (event) => { console.log("Bubbling"); }, false);'
+            correctCode: 'var myDiv = document.getElementById("myDiv");\nmyDiv.addEventListener("click", (event) => { console.log("Bubbling"); }, false);'
         },
         {
             type: 'multiple-choice',
@@ -478,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to add an event listener during the capture phase:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const myElement = document.getElementById("myElement");\nmyElement.addEventListener("click", (event) => { console.log("Capturing phase"); }, true);'
+            correctCode: 'var myElement = document.getElementById("myElement");\nmyElement.addEventListener("click", (event) => { console.log("Capturing phase"); }, true);'
         },
         {
             type: 'multiple-choice',
@@ -495,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to access the value of the data-price attribute on an element with the id "product"',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const productElement = document.getElementById("product");\nconst priceValue = productElement.dataset.price;'
+            correctCode: 'var productElement = document.getElementById("product");\nvar priceValue = productElement.dataset.price;'
         },
         {
             type: 'multiple-choice',
@@ -507,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to set the data-color attribute on an element with the class "color-box" to "blue":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const colorBox = document.querySelector(".color-box");\ncolorBox.dataset.color = "blue";'
+            correctCode: 'var colorBox = document.querySelector(".color-box");\ncolorBox.dataset.color = "blue";'
         },
         {
             type: 'multiple-choice',
@@ -524,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to iterate over all elements with the data-category attribute set to "fruit" and log their values:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const fruitElements = document.querySelectorAll("[data-category=\"fruit\"]");\nfruitElements.forEach(element => console.log(element.dataset.category));'
+            correctCode: 'var fruitElements = document.querySelectorAll("[data-category=\"fruit\"]");\nfruitElements.forEach(element => console.log(element.dataset.category));'
         },
         {
             type: 'multiple-choice',
@@ -541,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to check if an element with the id "product" has a data-in-stock attribute set to "true":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const productElement = document.getElementById("product");\nconst isInStock = productElement.dataset.inStock === "true";'
+            correctCode: 'var productElement = document.getElementById("product");\nvar isInStock = productElement.dataset.inStock === "true";'
         },
         {
             type: 'multiple-choice',
@@ -558,7 +577,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to remove the data-highlight attribute from an element with the class "highlighted":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const highlightedElement = document.querySelector(".highlighted");\ndelete highlightedElement.dataset.highlight;'
+            correctCode: 'var highlightedElement = document.querySelector(".highlighted");\ndelete highlightedElement.dataset.highlight;'
         },
         {
             type: 'multiple-choice',
@@ -626,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to check if Local Storage contains data with the key "theme":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const hasTheme = localStorage.getItem("theme") !== null;'
+            correctCode: 'var hasTheme = localStorage.getItem("theme") !== null;'
         },
         {
             type: 'multiple-choice',
@@ -643,7 +662,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to update the value of the key "counter" in Local Storage to its current value plus 1:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const currentCounterValue = parseInt(localStorage.getItem("counter")) || 0;\nlocalStorage.setItem("counter", currentCounterValue + 1);'
+            correctCode: 'var currentCounterValue = parseInt(localStorage.getItem("counter")) || 0;\nlocalStorage.setItem("counter", currentCounterValue + 1);'
         },
         {
             type: 'multiple-choice',
@@ -660,7 +679,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to add an object with key-value pairs { "city": "New York", "population": 8500000 } to Local Storage:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const cityInfo = { "city": "New York", "population": 8500000 };\nlocalStorage.setItem("cityInfo", JSON.stringify(cityInfo));'
+            correctCode: 'var cityInfo = { "city": "New York", "population": 8500000 };\nlocalStorage.setItem("cityInfo", JSON.stringify(cityInfo));'
         },
         {
             type: 'multiple-choice',
@@ -677,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to retrieve and parse the object stored with the key "cityInfo" from Local Storage:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const storedCityInfo = JSON.parse(localStorage.getItem("cityInfo")) || {};'
+            correctCode: 'var storedCityInfo = JSON.parse(localStorage.getItem("cityInfo")) || {};'
         },
         {
             type: 'multiple-choice',
@@ -694,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to update the "population" value in the "cityInfo" object in Local Storage to 9000000:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const storedCityInfo = JSON.parse(localStorage.getItem("cityInfo")) || {};\nstoredCityInfo.population = 9000000;\nlocalStorage.setItem("cityInfo", JSON.stringify(storedCityInfo));'
+            correctCode: 'var storedCityInfo = JSON.parse(localStorage.getItem("cityInfo")) || {};\nstoredCityInfo.population = 9000000;\nlocalStorage.setItem("cityInfo", JSON.stringify(storedCityInfo));'
         },
         {
             type: 'multiple-choice',
@@ -742,12 +761,6 @@ document.addEventListener('DOMContentLoaded', function () {
             correctAnswer: 'Application Programming Interface'
         },
         {
-            type: 'coding',
-            question: 'Write code to make an HTTP GET request using the Fetch API to the URL "https://api.example.com/data":',
-            codeChallenge: '// Your code here\n',
-            correctCode: 'fetch("https://api.example.com/data")\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error(error));'
-        },
-        {
             type: 'multiple-choice',
             question: 'Which method is used to schedule a function to run after a specified amount of time in the browser?',
             options: [
@@ -762,7 +775,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to add a click event listener to a button with the ID "myButton" that logs "Button clicked!" to the console when clicked:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const button = document.getElementById("myButton");\nbutton.addEventListener("click", () => console.log("Button clicked!"));'
+            correctCode: 'var button = document.getElementById("myButton");\nbutton.addEventListener("click", () => console.log("Button clicked!"));'
         },
         {
             type: 'multiple-choice',
@@ -779,7 +792,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to create a new HTML element <div> and append it to the document body:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const newDiv = document.createElement("div");\ndocument.body.appendChild(newDiv);'
+            correctCode: 'var newDiv = document.createElement("div");\ndocument.body.appendChild(newDiv);'
         },
         {
             type: 'multiple-choice',
@@ -796,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to change the text content of an element with the ID "myElement" to "Hello, World!":',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const myElement = document.getElementById("myElement");\nmyElement.textContent = "Hello, World!";'
+            correctCode: 'var myElement = document.getElementById("myElement");\nmyElement.textContent = "Hello, World!";'
         },
         {
             type: 'multiple-choice',
@@ -813,133 +826,280 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'coding',
             question: 'Write code to prevent the default form submission behavior when a form with the ID "myForm" is submitted:',
             codeChallenge: '// Your code here\n',
-            correctCode: 'const myForm = document.getElementById("myForm");\nmyForm.addEventListener("submit", (event) => {\n  event.preventDefault();\n  // Additional handling code\n});'
+            correctCode: 'var myForm = document.getElementById("myForm");\nmyForm.addEventListener("submit", (event) => {\n  event.preventDefault();\n  // Additional handling code\n});'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'What does the Window Object represent in JavaScript?',
+            options: ['The browser window', 'The current HTML document', 'The global environment'],
+            correctAnswer: 'The global environment'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'What is the difference between `let`, `const`, and `var` in JavaScript for variable declaration?',
+            options: ['All are function-scoped', '`let` is hoisted, `const` is not hoisted', '`var` is block-scoped'],
+            correctAnswer: 'let is block-scoped, can be reassigned, and is not hoisted.'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'Explain the concept of closures in JavaScript.',
+            options: ['Functions that are closed to modification', 'Functions bundled with references to surrounding state', 'Functions used for closing operations'],
+            correctAnswer: 'Functions bundled with references to surrounding state, allowing them to retain access to variables from their containing scope.'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'What is the difference between `null` and `undefined` in JavaScript?',
+            options: ['They are the same', '`undefined` means a variable has been declared but not assigned', '`null` represents intentional absence of any object value'],
+            correctAnswer: '`undefined` means a variable has been declared but not assigned, while `null` represents the intentional absence of any object value.'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'How does JavaScript handle asynchronous operations?',
+            options: ['Callbacks only', 'Promises only', 'Callbacks, Promises, and async/await'],
+            correctAnswer: 'Callbacks, Promises, and async/await are used to handle asynchronous operations in JavaScript.'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'What is the purpose of the `bind` method in JavaScript?',
+            options: ['To create new objects', 'To bind data to HTML elements', 'To create a new function with a specific `this` value'],
+            correctAnswer: 'To create a new function with a specific `this` value when called.'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'How does event delegation work in JavaScript?',
+            options: ['Attaching events to each child element', 'Using a single event listener on a common ancestor', 'Using inline event handlers'],
+            correctAnswer: 'Using a single event listener on a common ancestor to manage events on child elements through event bubbling.'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'Explain the concept of prototypal inheritance in JavaScript.',
+            options: ['Inheriting properties through classes', 'Copying properties from one object to another', 'Searching for properties in the prototype chain'],
+            correctAnswer: 'Searching for properties in the prototype chain to achieve inheritance in JavaScript.'
         },
     ];
 
+    //evet listener for the "Start" buttton click invokng startQuiz fuction below
     startBtn.addEventListener('click', startQuiz);
+    //event listenere for the "submit" button click, invoking the submitAnswer fuction below
     submitBtn.addEventListener('click', submitAnswer);
+    //event listener for the "save" button click invoking the saveScore below
     saveBtn.addEventListener('click', saveScore);
 
+    //fuction to start the quiz when the 'start' button is clicked
     function startQuiz() {
+        //Hide the 'Start' button when the quiz begins
         startBtn.style.display = 'none';
+        //Display the quiz screen
         quizScreen.style.display = 'block';
+        //show the first question
         showQuestion();
+        //set up a timer to call the 'updateTimer' fuction every second (1000 milliseconds)
         timer = setInterval(updateTimer, 1000);
     }
 
+    //Function to display the current question on the quiz screen
     function showQuestion() {
+        //Retrieve the current question object fromt he 'questions' array based on the current question indez.
         var currentQuestion = questions[currentQuestionIndex];
+        //set the context of the HTML element with the ID 'question' to the question text.
         document.getElementById('question').textContent = currentQuestion.question;
 
+        //check the type of current question.
         if (currentQuestion.type === 'multiple-choice') {
+            //IF it's a multiple-choice question:
+            // - Display the options container
             document.getElementById('options').style.display = 'flex';
+            // - Hide the code input by using = 'none'
             codeInput.style.display = 'none';
+            // - Create multiple-chocie options dynamically.
             createOptions(currentQuestion.options);
+            //if it's a coding question question:
         } else if (currentQuestion.type === 'coding') {
+            // - Hide the options containcer. 
             document.getElementById('options').style.display = 'none';
+            //Display the code input.
             codeInput.style.display = 'block';
-            codeInput.value = ''; // Clear previous code input
+            // Clear previous code input with = ''
+            codeInput.value = '';
         }
-
+        // Display the 'Submit' button.
         submitBtn.style.display = 'block';
     }
 
+    //Function to dynamically create and display multiple-choice options. 
     function createOptions(options) {
+        //Get the HTML element with the ID 'options' to serve as the container for the options.
         var optionsContainer = document.getElementById('options');
+        //this clears anu exiting content within the options container.
         optionsContainer.innerHTML = '';
 
+        //Iterate for each option in the 'options' array.
         options.forEach((option, index) => {
+            //Create a new button element for each option.
             var button = document.createElement('button');
+            //set the tex content of the button  to the current option.
             button.textContent = option;
+            //Adds an event listener to the buttion, then when clicked it calls for the 'checkAnwer' function with the index of the selected option.
             button.addEventListener('click', () => checkAnswer(index));
+            //Append the button to the options container.
             optionsContainer.appendChild(button);
         });
     }
 
+    //Fucntion to check the user's answes based on the questions type.
     function checkAnswer(answerIndex) {
+        //Retrieve the current question obejct from the 'questions' array.
         var currentQuestion = questions[currentQuestionIndex];
 
+        //Check the type of the current question with strict equality operator for multiple question
         if (currentQuestion.type === 'multiple-choice') {
+            //if its a multiple-choice question: then retrieve the user's selected answer.
             var userAnswer = currentQuestion.options[answerIndex];
+            //Compare the user's answer qirh the correct answer.
             if (userAnswer === currentQuestion.correctAnswer) {
+                // if the answer is correct then increase the score.
                 score++;
-                timeLeft = 90; // Resets time to 90 seconds on correct answer
+                //then re-set the timer to 90 seconds
+                timeLeft = 90;
+                // and display 'Correct answer'
                 showFeedback('Correct answer!');
+                //in incorrect
             } else {
-                timeLeft -= 10; // Subtracts 10 seconds for incorrect answers
-                if (timeLeft < 0) timeLeft = 0;
-                showFeedback('Incorrect answer');
-            }
-        } else if (currentQuestion.type === 'coding') {
-            var userCode = codeInput.value.trim();
-            if (userCode === currentQuestion.correctCode.trim()) {
-                score++;
-                timeLeft = 90; // Resets time to 90 seconds on correct answer
-                showFeedback('Correct answer!');
-            } else {
+                //then subtract 10 seconds from the timer for the incorrect answer.
                 timeLeft -= 10;
+                //then ensure that the timer doesn't go below 0.
                 if (timeLeft < 0) timeLeft = 0;
-                showFeedback('Incorrect answer');
+                // and show 'Incorrect'
+                showFeedback('Incorrect');
+            }
+            //if its a coding question
+        } else if (currentQuestion.type === 'coding') {
+            //then retrieve the user's entered fromt he code input field
+            var userCode = codeInput.value.trim();
+            // then compare the user's code with the correct answer.
+            if (userCode === currentQuestion.correctCode.trim()) {
+                //In correct (matching code) then increase the score
+                score++;
+                // and re-set the code to 90 seconds.
+                timeLeft = 90;
+                //And show "Correct Answer"
+                showFeedback('Correct answer!');
+                //otherwise
+            } else {
+                //if the answer is incorrec then deduct 10 seconds fromt he time left
+                timeLeft -= 10;
+                //confrimt that the timer does not go below 0.
+                if (timeLeft < 0) timeLeft = 0;
+                //then show Incorrect.
+                showFeedback('Incorrect');
             }
         }
 
+        //Increase the current question index to move to the next question.
         currentQuestionIndex++;
 
+        //check of there are any more question remaining in the quiz..
         if (currentQuestionIndex < questions.length) {
+            //if there are more question then display the next question.
             showQuestion();
+            //otherwise if there are no more questions
         } else {
+            //then end the quiz
             endQuiz();
         }
     }
 
+    //Fucntion to display the feedback ont he quiz screen. 
     function showFeedback(feedback) {
+        //Retrieve the HTML element witht he ID 'feedback' to display feeback 
         var feedbackElement = document.getElementById('feedback');
+        //Set the text context of the feedback element to the provided feedback message.
         feedbackElement.textContent = feedback;
     }
 
+    //Fucntion to handle the submission of an answer
     function submitAnswer() {
+        //Hide the 'Submit' button after its clicked by using none
         submitBtn.style.display = 'none';
-    
+
+        //check if the current question is a coding challenge
         if (questions[currentQuestionIndex].type === 'coding') {
             // In coding challenges, checks the answer immediately
             checkAnswer();
+            //otherwise  
         } else {
             // For multiple-choice questions, proceed to the next question
             currentQuestionIndex++;
+            //chek to see if there are any remaining queestions in the que quiz.
             if (currentQuestionIndex < questions.length) {
+                //If there are more question, then displayt he next question
                 showQuestion();
+                //otherwise
             } else {
+                //if there are no more questions then end the quiz
                 endQuiz();
             }
         }
     }
 
+    //Function to end the quiz
     function endQuiz() {
+        //Clear the timer interval to stop the countdown.
         clearInterval(timer);
+        //hide the quiz screen when the test concludes 
         quizScreen.style.display = 'none';
+        //Then display the end of the screen to show the user's score
         endScreen.style.display = 'block';
+        //Set the text context of the HTML element with the ID 'Final-Score to the user's final score
         document.getElementById('final-score').textContent = score;
     }
 
+    //Fuction to update the countdown timer
     function updateTimer() {
+        //check if there is remaining time on the count down.
         if (timeLeft > 0) {
+            //if there is time left
             timeLeft--;
+            //then update the timer value on the HTML element with the ID 'time'
             timerDisplay.textContent = timeLeft;
+            //otherwise
         } else {
+            //if there is no time left then End the quiz .
             endQuiz();
         }
     }
 
+    // Function to save the user's score along with their initials.
     function saveScore() {
+        // Retrieve the HTML element with the ID 'initials' to get the user's initials input.
         var initialsInput = document.getElementById('initials');
+
+        // Trim and convert the user's entered initials to uppercase.
         var initials = initialsInput.value.trim().toUpperCase();
 
+        // Check if initials are provided.
         if (initials !== '') {
-            // Here you can save the score and initials
+            // Save the score and initials in local storage.
+            saveToLocalStorage(initials, score);
+
+            // Display an alert indicating that the score is saved.
             alert(`Score saved: ${score}`);
         } else {
+            // If no initials are provided:
+            // - Display an alert instructing the user to enter their initials.
             alert('Please enter your initials.');
         }
+    }
+
+    // Function to save data in local storage.
+    function saveToLocalStorage(initials, score) {
+        // Retrieve existing data from local storage or initialize an empty array.
+        var savedScores = JSON.parse(localStorage.getItem('quizScores')) || [];
+
+        // Add the current score and initials to the array.
+        savedScores.push({ initials: initials, score: score });
+
+        // Save the updated array back to local storage.
+        localStorage.setItem('quizScores', JSON.stringify(savedScores));
     }
 });
