@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var saveBtn = document.getElementById('save-btn');
     var codeInput = document.getElementById('code-input');
 
-    let timer;
-    let timeLeft = 90; // Initial time in seconds
-    let currentQuestionIndex = 0;
-    let score = 0;
+    var timer;
+    var timeLeft = 90; // Initial time in seconds
+    var currentQuestionIndex = 0;
+    var score = 0;
 
     var questions = [
         {
@@ -18,6 +18,38 @@ document.addEventListener('DOMContentLoaded', function () {
             question: 'What does the Window Object represent in JavaScript?',
             options: ['The browser window', 'The current HTML document', 'The global environment'],
             correctAnswer: 'The global environment'
+        },
+        
+        
+        {
+            type: 'multiple-choice',
+            question: 'What does the DOM Stand for in JavaScript?',
+            options: ['Document Object Model', 'Data Object Model', 'Document Oriented Moduel'],
+            correctAnswer: 'Document Object Model'
+        },
+        {
+            type: 'coding',
+            question: 'Implement a function to find the factorial of a number:',
+            codeChallenge: 'function factorial(n) {\n// Your code here\n}',
+            correctCode: 'function factorial(n) {\n  if (n === 0 || n === 1) return 1;\n  return n * factorial(n - 1);\n}'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'What is the purpose of the "use strict" directive in JavaScript?',
+            options: ['Enforces a more strict set of rules for writing JavaScript', 'Allows the use of deprecated features', 'Declares a variable with strict scope'],
+            correctAnswer: 'Enforces a more strict set of rules for writing JavaScript'
+        },
+        {
+            type: 'coding',
+            question: 'Write a function to check if a given string is a palindrome:',
+            codeChallenge: 'function isPalindrome(str) {\n// Your code here\n}',
+            correctCode: 'function isPalindrome(str) {\n  return str === str.split("").reverse().join("");\n}'
+        },
+        {
+            type: 'multiple-choice',
+            question: 'Which of the following is NOT a valid way to declare a JavaScript variable?',
+            options: ['var x = 10;', 'var y = 20;', 'const z = 30;', 'variable w = 40;'],
+            correctAnswer: 'variable w = 40;'
         },
     ];
 
@@ -62,10 +94,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function checkAnswer(answerIndex) {
-        const currentQuestion = questions[currentQuestionIndex];
+        var currentQuestion = questions[currentQuestionIndex];
 
         if (currentQuestion.type === 'multiple-choice') {
-            const userAnswer = currentQuestion.options[answerIndex];
+            var userAnswer = currentQuestion.options[answerIndex];
             if (userAnswer === currentQuestion.correctAnswer) {
                 score++;
                 timeLeft = 90; // Resets time to 90 seconds on correct answer
@@ -76,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 showFeedback('Incorrect answer');
             }
         } else if (currentQuestion.type === 'coding') {
-            const userCode = codeInput.value.trim();
+            var userCode = codeInput.value.trim();
             if (userCode === currentQuestion.correctCode.trim()) {
                 score++;
                 timeLeft = 90; // Resets time to 90 seconds on correct answer
@@ -98,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showFeedback(feedback) {
-        const feedbackElement = document.getElementById('feedback');
+        var feedbackElement = document.getElementById('feedback');
         feedbackElement.textContent = feedback;
     }
 
