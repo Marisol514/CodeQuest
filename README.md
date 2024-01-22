@@ -27,6 +27,10 @@ WHEN the game is over
 THEN I can save my initials and my score
 ```
 ## Screen Shots
+![Alt text](image.png)
+![Alt text](image-1.png)
+![Alt text](image-2.png)
+![Alt text](image-3.png)
 
 ## Review Links
 
