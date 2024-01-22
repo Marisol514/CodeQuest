@@ -36,7 +36,7 @@ Deployed Site: https://marisol514.github.io/CodeQuest/
 
 ## Resources
 
-XpertLearning Assisant - BCS
+XpertLearning Assisant - BCS (Questions on how to make the button rounded on the corners and changed the color to rainbow)
 
 Display Data from API as a Quiz: https://forum.freecodecamp.org/t/display-data-from-api-as-a-quiz-application/281590
 
