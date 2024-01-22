@@ -32,7 +32,7 @@ THEN I can save my initials and my score
 
 GitHub: https://github.com/Marisol514/CodeQuest
 
-Deployed Site: 
+Deployed Site: https://marisol514.github.io/CodeQuest/
 
 ## Resources
 
